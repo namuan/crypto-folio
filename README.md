@@ -1,8 +1,10 @@
-### CryptoFolio
+## CryptoFolio
 
 A simple crypto currency portfolio viewer across multiple exchanges. 
 
-#### Installation:
+[![asciicast](https://asciinema.org/a/3gGtqx9A2YHo5VB7hFzcw4ZN7.png)](https://asciinema.org/a/3gGtqx9A2YHo5VB7hFzcw4ZN7) 
+
+### Installation:
 
 Make sure you are using Python 3.6
 
@@ -12,7 +14,7 @@ Install python dependencies
 pip install -r requirements.txt
 ```
 
-#### Configuration:
+### Configuration:
 
 Copy or rename env.cfg.sample file env.cfg and set the appropriate values for exchange API keys
 
@@ -28,7 +30,7 @@ GDAX_SECRET = xxxx
 FIAT_CURRENCIES = USD, GBP, EUR
 ```
 
-#### Application
+### Usage
 
 ```
 $ python script_calculate_balance.py -c EUR
@@ -50,15 +52,15 @@ Each line contains the following information
 [Currency] [Number of coins] [FIAT] [Currency value in Fiat] (weight across the whole portfolio)
 ``` 
 
-##### Exchanges supported
+### Exchanges supported
 
 GDAX 
 Bittrex 
 
-#### TODO
-
+### TODO
+ 
 [ ] Add binance support  
 
-#### Disclaimer:
+### Disclaimer:
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
