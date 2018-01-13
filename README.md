@@ -75,7 +75,7 @@ Each line contains the following information
 
 ### TODO
  
-[X] Add binance support  
+✅ Add binance support  
 
 ### Thanks
 
