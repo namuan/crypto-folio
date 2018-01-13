@@ -27,8 +27,23 @@ GDAX_PASSPHRASE = xxxx
 GDAX_KEY = xxxx
 GDAX_SECRET = xxxx
 
+BINANCE_KEY = xxxx
+BINANCE_SECRET = xxxx
+
 FIAT_CURRENCIES = USD, GBP, EUR
 ```
+
+See the following table to setup API keys for each exchange  
+
+**IMPORTANT**  
+Please make sure that you don't have withdrawal or transfer capabilities when generating API Keys
+
+| Exchange |API Settings page |
+|:---- |:---- |
+| `Gdax` | https://www.gdax.com/settings/api |
+| `Bittrex` | https://bittrex.com/Manage#sectionApi |  
+| `Binance` | https://www.binance.com/userCenter/createApi.html |
+
 
 ### Usage
 
@@ -54,12 +69,18 @@ Each line contains the following information
 
 ### Exchanges supported
 
-GDAX 
-Bittrex 
+* [GDAX](https://www.coinbase.com/join/59934bb507e57a00a92eef18)
+* [Bittrex](https://bittrex.com) 
+* [Binance](https://www.binance.com/?ref=11695267)
 
 ### TODO
  
-[ ] Add binance support  
+[X] Add binance support  
+
+### Thanks
+
+[python-binance](https://github.com/sammchardy/python-binance)  
+[python-bittrex](https://github.com/ericsomdahl/python-bittrex)  
 
 ### Disclaimer:
 
