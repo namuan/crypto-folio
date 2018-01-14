@@ -4,3 +4,4 @@ git+https://github.com/ericsomdahl/python-bittrex@master
 gdax
 expiringdict
 python-binance
+python-kucoin

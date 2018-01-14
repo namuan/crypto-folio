@@ -4,6 +4,13 @@ A simple crypto currency portfolio viewer across multiple exchanges.
 
 [![asciicast](https://asciinema.org/a/3gGtqx9A2YHo5VB7hFzcw4ZN7.png)](https://asciinema.org/a/3gGtqx9A2YHo5VB7hFzcw4ZN7) 
 
+### Exchanges supported
+
+* [GDAX](https://www.coinbase.com/join/59934bb507e57a00a92eef18)
+* [Bittrex](https://bittrex.com) 
+* [Binance](https://www.binance.com/?ref=11695267)
+* [Kucoin](https://www.kucoin.com/#/?r=22xtd)
+
 ### Installation:
 
 Make sure you are using Python 3.6
@@ -43,6 +50,7 @@ Please make sure that you don't have withdrawal or transfer capabilities when ge
 | `Gdax` | https://www.gdax.com/settings/api |
 | `Bittrex` | https://bittrex.com/Manage#sectionApi |  
 | `Binance` | https://www.binance.com/userCenter/createApi.html |
+| `Kucoin` | https://www.kucoin.com/#/user/setting/api |
 
 
 ### Usage
@@ -67,20 +75,16 @@ Each line contains the following information
 [Currency] [Number of coins] [FIAT] [Currency value in Fiat] (weight across the whole portfolio)
 ``` 
 
-### Exchanges supported
-
-* [GDAX](https://www.coinbase.com/join/59934bb507e57a00a92eef18)
-* [Bittrex](https://bittrex.com) 
-* [Binance](https://www.binance.com/?ref=11695267)
-
 ### TODO
  
-✅ Add binance support  
-
+✅ Add binance support
+[ ] Portfolio rebalancing
+ 
 ### Thanks
 
-[python-binance](https://github.com/sammchardy/python-binance)  
-[python-bittrex](https://github.com/ericsomdahl/python-bittrex)  
+[python-binance](https://github.com/sammchardy/python-binance)   
+[python-bittrex](https://github.com/ericsomdahl/python-bittrex)   
+[python-kucoin](https://github.com/sammchardy/python-kucoin)  
 
 ### Disclaimer:
 
