@@ -1,5 +1,4 @@
 import requests
-from contexttimer import Timer
 from expiringdict import ExpiringDict
 
 from config import log

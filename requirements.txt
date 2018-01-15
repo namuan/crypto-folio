@@ -5,3 +5,5 @@ gdax
 expiringdict
 python-binance
 python-kucoin
+pandas
+matplotlib

@@ -10,8 +10,11 @@ Setup as cron
 """
 import argparse
 import json
-from itertools import groupby, chain
-from operator import itemgetter
+from itertools import chain
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
 from config import *
 from crypto_compare import CryptoCompare
 from exchanges import all_exchanges
@@ -26,18 +29,22 @@ def load_json(file_name):
 
 def convert_currency(currency, available, rates):
     currency_rate = rates.get(currency)
+    if not currency_rate:
+        return 0.0
+
     return available / currency_rate
 
 
-def calculate_value(f, crypto_rates):
-    currency = f.get('currency')
-    available = float(f.get('available'))
+def calculate_value(coin_data, crypto_rates):
+    currency = coin_data.get('currency')
+    available = float(coin_data.get('available'))
     converted_value = available
 
     if currency not in fiat_currencies():
         converted_value = convert_currency(currency, available, crypto_rates)
 
     return {
+        'exchange': coin_data.get('exchange'),
         'currency': currency,
         'available': available,
         'converted_value': converted_value
@@ -61,42 +68,49 @@ def calculate_coin_values(crypto_rates, exchange_coins):
     ]
 
 
+def exchanges_balance_data():
+    exchange_balances = list(chain.from_iterable([e.get_balances() for e in all_exchanges]))
+    return exchange_balances
+
+
+def fetch_crypto_rates(main_currency, exchange_balances):
+    t_syms = list(set([e.get('currency') for e in exchange_balances]))
+    crypto_rates = cc.exchange_rates(main_currency, ",".join(t_syms))
+    return crypto_rates
+
+
+def build_portfolio(main_currency):
+    exchange_balances = exchanges_balance_data()
+    crypto_rates = fetch_crypto_rates(main_currency, exchange_balances)
+    coin_with_fiat_values = [
+        calculate_value(coin, crypto_rates)
+        for coin in exchange_balances
+    ]
+    portfolio_df = pd.DataFrame.from_records(coin_with_fiat_values)
+    return portfolio_df[portfolio_df['converted_value'] > 0.01]
+
+
 def main(args):
     main_currency = args.currency
 
-    exchange_balances = list(chain.from_iterable([e.get_balances() for e in all_exchanges]))
+    portfolio_df = build_portfolio(main_currency)
 
-    t_syms = list(set([e.get('currency') for e in exchange_balances]))
-    crypto_rates = cc.exchange_rates(main_currency, ",".join(t_syms))
+    total_account_value = portfolio_df['converted_value'].sum()
 
-    by_exchange_fn = lambda o: o.get('exchange')
-
-    exchanges_with_coins = {
-        k: calculate_coin_values(crypto_rates, v) for k, v in groupby(exchange_balances, by_exchange_fn)
-    }
-
-    all_currencies_with_values = list(chain.from_iterable(exchanges_with_coins.values()))
-    total_account_value = sum(
-        map(itemgetter('converted_value'), all_currencies_with_values)
-    )
+    portfolio_df['percentage'] = portfolio_df['converted_value'] / total_account_value * 100
 
     exchange_messages = []
 
-    for ex, exchange_coins in exchanges_with_coins.items():
-        total_fiat_in_exchange = sum(
-            map(itemgetter('converted_value'), exchange_coins)
-        )
+    group_by_currencies = portfolio_df \
+        .groupby('currency') \
+        .agg({'converted_value': sum, 'available': sum, 'percentage': sum, 'exchange': min})
 
-        exchange_coins_summary = "\n".join([
-            build_message(main_currency, total_account_value, data) for data in exchange_coins
-        ])
-        exchange_messages.append("🗓  {}\n{}\nTotal {}: {:06.2f}  ({:.2f}%)".format(
-            ex,
-            exchange_coins_summary,
-            main_currency,
-            total_fiat_in_exchange,
-            total_fiat_in_exchange / total_account_value * 100
-        ))
+    sort_by_converted_value = group_by_currencies.sort_values(
+        'converted_value',
+        ascending=False
+    )
+
+    print(sort_by_converted_value)
 
     combined_message = "\n".join(exchange_messages)
 
@@ -104,6 +118,17 @@ def main(args):
         combined_message,
         total_account_value
     ))
+
+    plt.pie(
+        sort_by_converted_value['percentage'],
+        labels=sort_by_converted_value.index,
+        shadow=False,
+        autopct='%1.1f%%'
+    )
+
+    plt.axis('equal')
+    plt.tight_layout()
+    plt.show()
 
 
 if __name__ == '__main__':
