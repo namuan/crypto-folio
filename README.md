@@ -13,7 +13,8 @@ A simple crypto currency portfolio viewer across multiple exchanges.
 
 ### Installation:
 
-Make sure you are using Python 3.6
+Make sure you are using Python 3.6. The script uses matplotlib so please have a look at this [Faq](https://matplotlib.org/faq/virtualenv_faq.html) 
+if you are running python in a virtual environment.
 
 Install python dependencies
 
@@ -78,9 +79,16 @@ Each line contains the following information
 [Currency] [Number of coins] [FIAT] [Currency value in Fiat] (weight across the whole portfolio)
 ``` 
 
+To plot pie chart along with the table
+
+```
+python script_calculate_balance.py -c EUR -p
+```
+
 ### TODO
  
 ✅ Add binance support
+✅ Pie chart for visualising portfolio
 [ ] Portfolio rebalancing
  
 ### Thanks

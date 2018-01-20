@@ -11,7 +11,7 @@ Setup as cron
 import argparse
 import json
 from itertools import chain
-
+from tabulate import tabulate
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -99,40 +99,38 @@ def main(args):
 
     portfolio_df['percentage'] = portfolio_df['converted_value'] / total_account_value * 100
 
-    exchange_messages = []
-
     group_by_currencies = portfolio_df \
         .groupby('currency') \
         .agg({'converted_value': sum, 'available': sum, 'percentage': sum, 'exchange': min})
 
-    sort_by_converted_value = group_by_currencies.sort_values(
+    group_by_currencies.sort_values(
         'converted_value',
-        ascending=False
+        ascending=False,
+        inplace=True
     )
 
-    print(sort_by_converted_value)
+    print(tabulate(group_by_currencies, headers='keys', tablefmt='grid', numalign='right', floatfmt='.2f'))
 
-    combined_message = "\n".join(exchange_messages)
-
-    print("{}\nTotal: {:06.2f}".format(
-        combined_message,
+    print("Total: {:06.2f}".format(
         total_account_value
     ))
 
-    plt.pie(
-        sort_by_converted_value['percentage'],
-        labels=sort_by_converted_value.index,
-        shadow=False,
-        autopct='%1.1f%%'
-    )
+    if args.plot:
+        plt.pie(
+            group_by_currencies['percentage'],
+            labels=group_by_currencies.index,
+            shadow=False,
+            autopct='%1.1f%%'
+        )
 
-    plt.axis('equal')
-    plt.tight_layout()
-    plt.show()
+        plt.axis('equal')
+        plt.tight_layout()
+        plt.show()
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--currency', required=True, help='Conversion currency')
+    parser.add_argument('-p', '--plot', action="store_true", help='Plot pie chart')
     args = parser.parse_args()
     main(args)

@@ -7,3 +7,4 @@ python-binance
 python-kucoin
 pandas
 matplotlib
+tabulate
