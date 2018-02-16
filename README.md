@@ -87,9 +87,9 @@ python script_calculate_balance.py -c EUR -p
 
 ### TODO
  
-✅ Add binance support
-✅ Pie chart for visualising portfolio
-[ ] Portfolio rebalancing
+✅ Add binance support    
+✅ Pie chart for visualising portfolio  
+[ ] Portfolio rebalancing  
  
 ### Thanks
 

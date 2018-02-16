@@ -79,12 +79,20 @@ def fetch_crypto_rates(main_currency, exchange_balances):
     return crypto_rates
 
 
+def coins_available_over_min_balance(coin):
+    return float(coin.get('available')) > min_balance_to_exclude()
+
+
 def build_portfolio(main_currency):
     exchange_balances = exchanges_balance_data()
-    crypto_rates = fetch_crypto_rates(main_currency, exchange_balances)
+    coins_excluding_min_balances = [
+        coin for coin in exchange_balances
+        if coins_available_over_min_balance(coin)
+    ]
+    crypto_rates = fetch_crypto_rates(main_currency, coins_excluding_min_balances)
     coin_with_fiat_values = [
         calculate_value(coin, crypto_rates)
-        for coin in exchange_balances
+        for coin in coins_excluding_min_balances
     ]
     portfolio_df = pd.DataFrame.from_records(coin_with_fiat_values)
     return portfolio_df[portfolio_df['converted_value'] > 0.01]

@@ -24,6 +24,9 @@ class CryptoCompare:
 
         crypto_exchange_data = requests.get(url).json()
 
+        if crypto_exchange_data.get('Response') == 'Error':
+            raise AssertionError(crypto_exchange_data.get('Message'))
+
         self.cache[key] = crypto_exchange_data
 
         return crypto_exchange_data

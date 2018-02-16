@@ -10,3 +10,7 @@ def config(key, default_value=None):
 
 def fiat_currencies():
     return config("FIAT_CURRENCIES").split(",")
+
+
+def min_balance_to_exclude():
+    return float(config("MIN_BALANCE_TO_EXCLUDE"))
