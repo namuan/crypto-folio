@@ -1,5 +1,7 @@
 ## CryptoFolio
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/51051ed0adbf5df29c12/maintainability)](https://codeclimate.com/github/namuan/crypto-folio/maintainability)
+
 A simple crypto currency portfolio viewer across multiple exchanges. 
 
 [![asciicast](https://asciinema.org/a/3gGtqx9A2YHo5VB7hFzcw4ZN7.png)](https://asciinema.org/a/3gGtqx9A2YHo5VB7hFzcw4ZN7) 
