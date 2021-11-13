@@ -9,3 +9,4 @@ pandas
 matplotlib
 tabulate
 autobahn>=20.12.3 # not directly required, pinned by Snyk to avoid a vulnerability
+websockets>=10.0 # not directly required, pinned by Snyk to avoid a vulnerability
